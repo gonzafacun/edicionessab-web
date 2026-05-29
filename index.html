@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ediciones Sab | Catálogo de Productos y Combos</title>
+    <style>
+        /* Estilos Globales y Paleta de Colores Ajustada al Catálogo */
+        :root {
+            --color-primario: #003366;    /* Azul profundo institucional */
+            --color-secundario: #a3e635;  /* Verde lima de promos (primavera/combos) */
+            --color-acento: #f39c12;      /* Naranja para llamados a la acción */
+            --color-fondo: #f8fafc;       /* Fondo claro limpio */
+            --color-texto: #1e293b;       /* Texto principal */
+            --fuente-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--fuente-principal);
+            line-height: 1.6;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+        }
+
+        /* Navegación */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .logo h1 {
+            color: var(--color-primario);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-primario);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-acento);
+        }
+
+        /* Sección Hero (Bienvenida / Primavera) */
+        .hero {
+            background: linear-gradient(rgba(0, 51, 102, 0.75), rgba(163, 230, 53, 0.2)), url('https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .hero-content h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .btn-principal {
+            background-color: var(--color-acento);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn-principal:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        /* Secciones Generales */
+        .seccion {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            font-size: 30px;
+            color: var(--color-primario);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .titulo-seccion::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--color-secundario);
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Catálogo de Productos (Grid) */
+        .grid-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .tarjeta-producto {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            text-align: center;
+            padding-bottom: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tarjeta-producto:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Contenedor para que pongas tus imágenes directamente */
+        .imagen-placeholder {
+            background-color: #f1f5f9;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-style: italic;
+            font-weight: bold;
+            border-bottom: 1px solid #e2e8f0;
+            border: 2px dashed #cbd5e1;
+            margin: 10px;
+            border-radius: 6px;
+        }
+
+        .tarjeta-producto h3 {
+            margin: 15px 10px 5px 10px;
+            font-size: 18px;
+            color: var(--color-primario);
+        }
+
+        .tarjeta-producto .categoria {
+            display: inline-block;
+            background-color: #e2e8f0;
+            color: #475569;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .tarjeta-producto .descripcion {
+            color: #64748b;
+            font-size: 14px;
+            padding: 0 15px;
+            margin-bottom: 15px;
+            min-height: 45px;
+        }
+
+        /* Sobre Nosotros */
+        .sobre-nosotros {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Contacto y Formulario */
+        .contacto-contenedor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-contacto h3 {
+            margin-bottom: 20px;
+            color: var(--color-primario);
+        }
+
+        .info-contacto p {
+            margin-bottom: 15px;
+            color: #475569;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1ebd59;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form textarea {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-family: inherit;
+            background-color: #f8fafc;
+        }
+
+        form button {
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        form button:hover {
+            background-color: var(--color-acento);
+        }
+
+        /* Pie de Página */
+        footer {
+            background-color: var(--color-primario);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--color-secundario);
+        }
+
+        footer a {
+            color: var(--color-secundario);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .contacto-contenedor {
+                grid-template-columns: 1fr;
+            }
+            .hero-content h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado / Navegación -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Ediciones Sab</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#catalogo">Catálogo</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sección de Bienvenida (Hero adaptado a tus promos de temporada) -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h2>Nuestras Ofertas y Combos</h2>
+            <p>Encontrá todo lo que necesitás para tu hogar, tecnología de punta y los mejores combos escolares en un solo lugar.</p>
+            <a href="#catalogo" class="btn-principal">Ver Catálogo</a>
+        </div>
+    </section>
+
+    <!-- Sección de Catálogo Reestructurado -->
+    <section id="catalogo" class="seccion">
+        <h2 class="titulo-seccion">Catálogo de Productos</h2>
+        <div class="grid-productos">
+            
+            <!-- Producto 1: Combo Escolar -->
+            <div class="tarjeta-producto">
+                <div class="imagen-placeholder">[ Configurar Foto: Combo Escolar 2026 ]</div>
+                <span class="categoria">Vuelta a Clases</span>
+                <h3>Combo Escolar Completo</h3>
+                <p class="descripcion">Pack completo con mochila reforzada, carpetas, cuadernos y set de útiles escolares esenciales.</p>
+                <a href="#contacto" class="btn-principal" style="padding: 8px 20px; font-size: 14px;">Consultar Promo</a>
+            </div>
+
+            <!-- Producto 2: Smartphone -->
+            <div class="tarjeta-producto">
+                <div class="imagen-placeholder">[ Configurar Foto: Xiaomi A3 ]</div>
+                <span class="categoria">Tecnología</span>
+                <h3>Xiaomi A3 + Regalo</h3>
+                <p class="descripcion">Celular de última generación acompañado de smartwatch o accesorios en promoción exclusiva.</p>
+                <a href="#contacto" class="btn-principal" style="padding: 8px 20px; font-size: 14px;">Consultar Stock</a>
+            </div>
+
+            <!-- Producto 3: Smartwatch -->
+            <div class="tarjeta-producto">
+                <div class="imagen-placeholder">[ Configurar Foto: Redmi Watch 5 ]</div>
+                <span class="categoria">Tecnología</span>
+                <h3>Redmi Watch 5 Active</h3>
+                <p class="descripcion">Mantenete conectado con la mejor autonomía, notificaciones y sensores deportivos.</p>
+                <a href="#contacto" class="btn-principal" style="padding: 8px 20px; font-size: 14px;">Consultar Stock</a>
+            </div>
+
+            <!-- Producto 4: Parlantes -->
+            <div class="tarjeta-producto">
+                <div class="imagen-placeholder">[ Configurar Foto: Súper Promo Parlantes ]</div>
+                <span class="categoria">Audio</span>
+                <h3>Súper Promo Parlantes</h3>
+                <p class="descripcion">Elegí el modelo portátil o bluetooth que más se adapte a tu estilo y llevá tu música a todos lados.</p>
+                <a href="#contacto" class="btn-principal" style="padding: 8px 20px; font-size: 14px;">Ver Modelos</a>
+            </div>
+
+            <!-- Producto 5: Termos y Bazar -->
+            <div class="tarjeta-producto">
+                <div class="imagen-placeholder">[ Configurar Foto: Termos y Jarras ]</div>
+                <span class="categoria">Hogar / Bazar</span>
+                <h3>Termos y Jarras Eléctricas</h3>
+                <p class="descripcion">Termos de acero inoxidable en variedad de colores y jarras eléctricas con corte automático.</p>
+                <a href="#contacto" class="btn-principal" style="padding: 8px 20px; font-size: 14px;">Consultar Colores</a>
+            </div>
+
+            <!-- Producto 6: Combos Especiales -->
+            <div class="tarjeta-producto">
+                <div class="imagen-placeholder">[ Configurar Foto: Combo Día de la Madre / Navideño ]</div>
+                <span class="categoria">Ediciones Especiales</span>
+                <h3>Combos del Mes / Fechas Especiales</h3>
+                <p class="descripcion">Electrodomésticos para equipar tu casa o regalar en fechas clave con facilidades de pago.</p>
+                <a href="#contacto" class="btn-principal" style="padding: 8px 20px; font-size: 14px;">Ver Oferta</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección Nosotros -->
+    <section id="nosotros" class="seccion">
+        <h2 class="titulo-seccion">Sobre Ediciones Sab</h2>
+        <div class="sobre-nosotros">
+            <p>Somos una tienda comprometida con acercarte las mejores ofertas en tecnología, artículos para el hogar, bazar y combos escolares adaptados a cada temporada del año. Ofrecemos atención personalizada y facilidades para que equipes tu casa o comiences las clases con todo lo necesario.</p>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="seccion">
+        <h2 class="titulo-seccion">Hacé Tu Pedido</h2>
+        <div class="contacto-contenedor">
+            
+            <div class="info-contacto">
+                <h3>¿Consultas sobre stock o envíos?</h3>
+                <p>Escribinos directamente para coordinar tus entregas, armar pedidos personalizados o consultar planes de cuotas.</p>
+                <p><strong>Ubicación:</strong> Hacemos envíos coordinados. ¡Consultá tu zona!</p>
+                
+                <!-- Enlace Directo a WhatsApp y Redes -->
+                <a href="https://wa.me/543644677203" target="_blank" class="btn-whatsapp">
+                    💬 WhatsApp: 3644677203
+                </a>
+                
+                <div class="redes-sociales-btn">
+                    <a href="https://www.facebook.com/people/Ediciones-Sab/100092242388270/" target="_blank" class="btn-principal" style="background-color: #1877F2;">
+                        Seguinos en Facebook
+                    </a>
+                </div>
+            </div>
+
+            <div class="formulario">
+                <form action="#" method="POST" onsubmit="alert('¡Gracias por tu consulta! Nos comunicaremos a la brevedad.'); return false;">
+                    <input type="text" placeholder="Tu Nombre" required>
+                    <input type="text" placeholder="Tu Teléfono / WhatsApp" required>
+                    <input type="text" placeholder="Producto o Combo de interés" required>
+                    <textarea rows="5" placeholder="Escribí acá los detalles de tu pedido o consulta..." required></textarea>
+                    <button type="submit">Enviar Consulta</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2026 Ediciones Sab. Todos los derechos reservados.</p>
+        <p>Encontranos en <a href="https://www.facebook.com/people/Ediciones-Sab/100092242388270/" target="_blank">Facebook</a></p>
+    </footer>
+
+</body>
+</html>
